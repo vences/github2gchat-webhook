@@ -1,4 +1,3 @@
 name = "github2gchat-webhook"
 main = "src/index.js"
-type = "JavaScript"
 compatibility_date = "2022-07-18"
