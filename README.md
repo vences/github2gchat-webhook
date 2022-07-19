@@ -9,6 +9,7 @@ That project is mainly inspired from [worker-slack-bot](https://github.com/codew
 The Workers has a path `/webhook` that need to be used. 
 As per the creation of a google webhook, the following schema is currently used:
 `https://chat.googleapis.com/v1/spaces/<SPACE-ID>/messages?key=<KEY>&token=<TOKEN>`
+
 The _SPACE-ID_, _KEY_ and _TOKEN_ has to be sent in order to handle the destination correctly
 
 The following params are available:
@@ -19,6 +20,9 @@ The following params are available:
 ## How to deploy?
 
 Clone the repo and use `wrangler publish`. If you do not know wrangler please follow the guide [here](https://developers.cloudflare.com/workers/get-started/guide/). 
+
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/vences/github2gchat-webhook)
+
 
 ## Note
 
