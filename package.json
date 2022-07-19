@@ -1,0 +1,12 @@
+{
+  "name": "github2gchat-webhook",
+  "version": "0.0.0",
+  "devDependencies": {
+    "wrangler": "2.0.15"
+  },
+  "private": true,
+  "scripts": {
+    "start": "wrangler dev",
+    "deploy": "wrangler publish"
+  }
+}
