@@ -17,6 +17,19 @@ export const constructGhReleasesGChatMessage = (release, prefix_text) => {
     };
 }
 
+export const constructPingGChatMessage = (hook) => {
+  const date = new Date(Date.parse(hook.created_at)).toLocaleDateString()
+
+  const text_lines = [
+    `*Ping ${hook.active}*`,
+    `Created on ${date}`,
+  ]
+
+  return {
+      text: compact(text_lines).join('\n'),
+    };
+}
+
 export const constructGChatUrl = (url) => {
   const params = new URL(url).searchParams;
   if (params !== undefined && params.has("space") && params.has("key") && params.has("token")) {

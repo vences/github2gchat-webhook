@@ -1,4 +1,4 @@
-import { constructGhReleasesGChatMessage, constructGChatUrl } from '../utils/gchat'
+import { constructGhReleasesGChatMessage, constructGChatUrl, constructPingGChatMessage } from '../utils/gchat'
 
 export default async request => {
   try {
@@ -8,15 +8,18 @@ export default async request => {
       throw 'wrong content-type';
     }
     const body = JSON.stringify(await request.json())
-    const { zen, action, release } = JSON.parse(body)
+    const { zen, action, release, hook } = JSON.parse(body)
     const prefix_text = `An new releases was ${action}:`
-
-    if (zen !== undefined || action != "released") {
-      return new Response('OK')
-    }
-
-    const blocks = constructGhReleasesGChatMessage(release, prefix_text)
     const gchatWebhookUrl = constructGChatUrl(url)
+    let blocks;
+
+    if (zen !== undefined) {
+      blocks = constructPingGChatMessage(hook)
+    } else if (action == "released") {
+      blocks = constructGhReleasesGChatMessage(release, prefix_text)
+    } else {
+      return new Response('Not yet supported', { status: 500 })
+    }
 
     if (gchatWebhookUrl === null) {
       throw 'error not enough params sent'
