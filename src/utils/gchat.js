@@ -21,7 +21,7 @@ export const constructPingGChatMessage = (hook) => {
   const date = new Date(Date.parse(hook.created_at)).toLocaleDateString()
 
   const text_lines = [
-    `*Ping ${hook.active}*`,
+    `*Webhooks status:* ${hook.active}`,
     `Created on ${date}`,
   ]
 
