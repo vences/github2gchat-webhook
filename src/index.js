@@ -9,9 +9,12 @@
  */
 import webhook from './handlers/webhook'
 import Router from './handlers/router'
+import { pushSentryKey, pushSentryID } from './config.js'
 
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
+    pushSentryKey(env.Sentry_Key)
+    pushSentryID(env.Sentry_ID)
     const r = new Router()
     r.post('/webhook', webhook)
 
@@ -22,17 +25,5 @@ export default {
     }
   
     return response
-    // try {
-    //   const url = new URL(request.url)
-    //   const method = request.method
-    //   if (method == "POST" && url.pathname == '/webhook') {
-    //     webhook(request);
-    //   } else {
-    //     return new Response('Not found', { status: 404 })
-    //   }
-    // } catch (err) {
-    //   const errorText = 'unexpected error'
-    //   return new Response(errorText, { status: 501 })
-    // }
   },
 };

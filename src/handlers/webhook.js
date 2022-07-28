@@ -1,11 +1,12 @@
 import { constructGhReleasesGChatMessage, constructGChatUrl, constructPingGChatMessage } from '../utils/gchat'
+import { postLog } from '../utils/logs'
 
 export default async request => {
   try {
     const { headers, url } = request;
     const contentType = headers.get('content-type') || '';
     if (!contentType.includes('application/json')) {
-      throw 'wrong content-type';
+      throw '{"error": "wrong content-type"}';
     }
     const body = JSON.stringify(await request.json())
     const { zen, action, release, hook } = JSON.parse(body)
@@ -18,11 +19,15 @@ export default async request => {
     } else if (action == "released") {
       blocks = constructGhReleasesGChatMessage(release, prefix_text)
     } else {
-      return new Response('Not yet supported', { status: 500 })
+      const msg = `${action} - Not yet supported`
+      const objRelease = JSON.stringify(release, (k, v) => v === undefined ? null : v)
+      const objHook = JSON.stringify(hook, (k, v) => v === undefined ? null : v)
+      await postLog(msg, `{"action": "${action}", "release": ${objRelease}, "hook": ${objHook}}`)
+      return new Response(msg, { status: 500 })
     }
 
     if (gchatWebhookUrl === null) {
-      throw 'error not enough params sent'
+      throw '{ "error": "error not enough params sent"}'
     }
 
     let response = await fetch(gchatWebhookUrl, {
@@ -30,11 +35,14 @@ export default async request => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
     })
-    console.log(response.status)
-    console.log(JSON.stringify(await response.json()))
 
-    return new Response('OK')
+    if (response.status == 200) {
+      return new Response('OK')
+    } else {
+      throw `{"error": "error ${response.status} when sending the request"}`
+    }
   } catch (err) {
+    await postLog('Error has been raised', err)
     return new Response(err, { status: 500 })
   }
 }
