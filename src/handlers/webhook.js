@@ -14,6 +14,10 @@ export default async request => {
     const gchatWebhookUrl = constructGChatUrl(url)
     let blocks;
 
+    if (gchatWebhookUrl === null) {
+      throw '{ "error": "error not enough params sent"}'
+    }
+
     if (zen !== undefined) {
       blocks = constructPingGChatMessage(hook)
     } else if (action == "released") {
@@ -24,10 +28,6 @@ export default async request => {
       const objHook = JSON.stringify(hook, (k, v) => v === undefined ? null : v)
       await postLog(msg, `{"action": "${action}", "release": ${objRelease}, "hook": ${objHook}}`)
       return new Response(msg, { status: 500 })
-    }
-
-    if (gchatWebhookUrl === null) {
-      throw '{ "error": "error not enough params sent"}'
     }
 
     let response = await fetch(gchatWebhookUrl, {
