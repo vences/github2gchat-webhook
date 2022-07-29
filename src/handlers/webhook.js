@@ -39,7 +39,7 @@ export default async request => {
     if (response.status == 200) {
       return new Response('OK')
     } else {
-      throw `{"error": "error ${response.status} when sending the request"}`
+      throw `${JSON.stringify(await response.json())}`
     }
   } catch (err) {
     await postLog('Error has been raised', err)
