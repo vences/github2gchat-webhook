@@ -18,7 +18,7 @@ Additionaly you can follow logging instruction [here](logging-via-sentry) to mon
 
 ## How it works?
 
-### Deployment as a webhook
+### :link: Deployment as a webhook
 
 That deployment means you need to enter the webhook URL in Github that point to your Cloudflare Workers. You are leveraging the path `/webhook` and all the query string parameters expected by thta deployment (described below). In that mode, the Cloudflare Workers is a middelware to adapt the webhhok request sent by github into a webhook message understood by Google Chat. 
 
@@ -37,7 +37,7 @@ The following params are available:
 
 Here an example of the final URL you have to configure in github to get webhook in GChat: `https://github2gchat-webhook.<subdomain>.workers.dev/webhook?space=<SPACE-ID>&key=<KEY>&token=<TOKEN>`
 
-### Deployment as a monitoring mode
+### :mag_right: Deployment as a monitoring mode
 
 The monitoring mode leverage KV storage in Cloudflare and Workers Cron jobs in order to monitor specific RSS feed and post any update in a Gchat via a webhooks. 
 
@@ -59,7 +59,7 @@ The following structure has to be defined in the KV store:
   - source: RSS feed to monitor in my example I am taking RSS feed directly from github.
   - destinations: Array of Google Chat webhook on which any update are posted.
 
-### Logging via Sentry
+### :bell: Logging via Sentry
 
 The project use Sentry as logging endpoint for every errors. 
 
@@ -82,4 +82,4 @@ The current version of the [webhook mode](deployment-as-a-webhook) only handle `
 
 When you add the webhook (in [webhook mode](deployment-as-a-webhook)), the Workers handles [ping](https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#ping) event and write a message in the destination chat channel. 
 
-Enjoy!
+Enjoy! :tada:
