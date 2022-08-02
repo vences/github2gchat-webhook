@@ -1,3 +1,7 @@
 name = "github2gchat-webhook"
 main = "src/index.js"
 compatibility_date = "2022-07-18"
+
+kv_namespaces = [
+  { binding = "KV", preview_id = "652cc496fb8d4d9f8b5b7a053ef6dc94", id = "eaf16a1ca529448daf5ca1081bab0b96" }
+]
