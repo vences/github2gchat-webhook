@@ -86,7 +86,7 @@ async function postNew(env, webhook, commit) {
   const diffDays = dateDifference(today, dateCommit)
 
   if (diffDays < 2) {
-    const blocks = constructSimpleGChatMessage(`${webhook.name} ${commit.title}`, commit.link)
+    const blocks = constructSimpleGChatMessage(`${webhook.name}: ${commit.title}`, commit.link)
     for (const webhookUrl of webhook.destinations) {
       let response = await fetch(webhookUrl, {
         body: JSON.stringify(blocks),
