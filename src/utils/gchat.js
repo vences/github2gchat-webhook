@@ -30,6 +30,17 @@ export const constructPingGChatMessage = (hook) => {
     };
 }
 
+export const constructSimpleGChatMessage = (title, body) => {
+  const text_lines = [
+    `*${title}*`,
+    `${body}`,
+  ]
+
+  return {
+      text: compact(text_lines).join('\n'),
+    };
+}
+
 export const constructGChatUrl = (url) => {
   const params = new URL(url).searchParams;
   if (params !== undefined && params.has("space") && params.has("key") && params.has("token")) {
