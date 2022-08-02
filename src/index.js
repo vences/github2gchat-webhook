@@ -7,7 +7,7 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
-import webhook from './handlers/webhook'
+import webhook, { fetchAndPost } from './handlers/webhook'
 import Router from './handlers/router'
 import { pushSentryKey, pushSentryID } from './config.js'
 
@@ -26,4 +26,9 @@ export default {
   
     return response
   },
+  async scheduled(controller, environment, context) {
+    pushSentryKey(env.Sentry_Key)
+    pushSentryID(env.Sentry_ID)
+    context.waitUntil(fetchAndPost(environment))
+  }
 };
