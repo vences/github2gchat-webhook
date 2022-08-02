@@ -27,8 +27,8 @@ export default {
     return response
   },
   async scheduled(controller, environment, context) {
-    pushSentryKey(env.Sentry_Key)
-    pushSentryID(env.Sentry_ID)
+    pushSentryKey(environment.Sentry_Key)
+    pushSentryID(environment.Sentry_ID)
     context.waitUntil(fetchAndPost(environment))
   }
 };
