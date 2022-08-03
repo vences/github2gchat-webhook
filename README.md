@@ -50,7 +50,7 @@ In order to use that mode, you have to:
 `wrangler kv:key put --binding=KV "webhooks" '[{"name": "Terraform Provider Cloudflare", "source": "https://github.com/cloudflare/terraform-provider-cloudflare/releases.atom", "destinations": ["https://chat.googleapis.com/v1/spaces/<SPACE_ID>/messages?key=<KEY>&token=<TOKEN>"]}]'`
 Please not that the url should not be URL encoded, menaing you need to remove any excape characters like `\` and replace `%3D` by `=` for example. More info [here](https://www.w3schools.com/tags/ref_urlencode.ASP#:~:text=ASCII%20Encoding%20Reference). Otherwise the escape charactere is breaking the JSON object. 
 3. Make sure you are using `htmlparser2` dependency. Run `npm install`.
-4. (if needed) Change the default Cron triggers (set to 30 minutes in the [wrangler.toml](wrangler.toml) file) as described in the docs [here](https://developers.cloudflare.com/workers/platform/cron-triggers/)
+4. (if needed) Change the default Cron triggers (set to every minutes in the [wrangler.toml](wrangler.toml) file) as described in the docs [here](https://developers.cloudflare.com/workers/platform/cron-triggers/)
 
 The following structure has to be defined in the KV store:
 - KV key: webhooks
