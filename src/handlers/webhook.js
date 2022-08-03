@@ -51,7 +51,8 @@ export default async request => {
 
 export async function fetchAndPost(env) {
   try {
-    const webhooks = await env.KV.get("webhooks", { type: "json" });
+    const _ms_for_a_day = 1000 * 60 * 60 * 24
+    const webhooks = await env.KV.get("webhooks", { type: "json", cacheTtl: _ms_for_a_day });
 
     if (webhooks == null) {
       throw '{"error": "webhooks or urls not configured in KV"}'
@@ -84,6 +85,7 @@ async function postNew(env, webhook, commit) {
   const dateCommit = new Date(commit.pubDate);
   const today = new Date(Date.now())
   const diffDays = dateDifference(today, dateCommit)
+  const _ms_for_2_months = 1000 * 60 * 60 * 24 * 60
 
   if (diffDays < 2) {
     const blocks = constructSimpleGChatMessage(`${webhook.name}: ${commit.title}`, commit.link)
@@ -99,5 +101,5 @@ async function postNew(env, webhook, commit) {
       }
     }
   }
-  await env.KV.put(commit.id, JSON.stringify(commit));
+  await env.KV.put(commit.id, JSON.stringify(commit), {expirationTtl: _ms_for_2_months});
 }
