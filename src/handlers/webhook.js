@@ -85,8 +85,8 @@ async function postNew(env, webhook, commit) {
   const dateCommit = new Date(commit.pubDate);
   const today = new Date(Date.now())
   const diffDays = dateDifference(today, dateCommit)
-  const _ms_for_2_months = 1000 * 60 * 60 * 24 * 60
-  const secondsSinceEpoch = Math.round(Date.now() / 1000) + _ms_for_2_months
+  const _s_for_2_months = 60 * 60 * 24 * 60
+  const secondsSinceEpoch = Math.round(Date.now() / 1000) + _s_for_2_months
 
   if (diffDays < 2) {
     const blocks = constructSimpleGChatMessage(`${webhook.name}: ${commit.title}`, commit.link)
