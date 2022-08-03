@@ -102,5 +102,5 @@ async function postNew(env, webhook, commit) {
       }
     }
   }
-  await env.KV.put(commit.id, JSON.stringify(commit), {expiration: secondsSinceEpoch});
+  await env.KV.put(commit.id, JSON.stringify(commit));
 }
