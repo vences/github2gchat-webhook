@@ -59,6 +59,31 @@ The following structure has to be defined in the KV store:
   - source: RSS feed to monitor in my example I am taking RSS feed directly from github.
   - destinations: Array of Google Chat webhook on which any update are posted.
 
+
+*RSS feed example supported by Github:*
+
+```
+/* Repo releases */
+
+https://github.com/:owner/:repo/releases.atom
+
+/* Repo commits */
+
+https://github.com/:owner/:repo/commits.atom
+
+/* Private feed (You can find Subscribe to your news feed in dashboard page after login) */
+
+https://github.com/:user.private.atom?token=:secret
+
+/* Repo tags */
+
+https://github.com/:user/:repo/tags.atom
+
+/* User activity */
+
+https://github.com/:user.atom
+```
+
 ### :bell: Logging via Sentry
 
 The project use Sentry as logging endpoint for every errors. 
