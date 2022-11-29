@@ -59,6 +59,8 @@ The following structure has to be defined in the KV store:
   - source: RSS feed to monitor in my example I am taking RSS feed directly from github.
   - destinations: Array of Google Chat webhook on which any update are posted.
 
+*Note*: There is a static test in order to removed scheduled events part of the cloudflare incident. If you want to received those events you have to create a new webhook name with `scheduled` inside. 
+
 
 *RSS feed example supported by Github:*
 

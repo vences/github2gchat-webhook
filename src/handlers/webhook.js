@@ -70,7 +70,12 @@ export async function fetchAndPost(env) {
         const kv = await env.KV.get(commit.id);
     
         if (kv === null) {
-          await postNew(env, webhook, commit);
+          if (commit.description.includes("THIS IS A SCHEDULED EVENT") && webhook.source == "https://www.cloudflarestatus.com/history.atom" && !webhook.name.includes("scheduled")) {
+            //skip
+            console.log("THIS IS A SCHEDULED EVENT, should only send to webhook name containing scheduled")
+          } else {
+            await postNew(env, webhook, commit);
+          }
         }
       }
     }
