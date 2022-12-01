@@ -40,6 +40,15 @@ export default async request => {
 
     if (response.status == 200) {
       return new Response('OK')
+    } else if (response.status == 400) {
+      // if 400 -> Message is longer than 4096 characters
+      await postLog('Message is longer than 4096 characters', `{${JSON.stringify(await response.json())}, "body size": ${String(blocks).length}}`)
+      await fetch(gchatWebhookUrl, {
+        body: JSON.stringify(`{ "text": "*${prefix_text}*\n*${release.target_commitish}*: ${release.tag_name} - <${release.html_url}>"}`),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      return new Response('OK')
     } else {
       throw `${JSON.stringify(await response.json())}`
     }
